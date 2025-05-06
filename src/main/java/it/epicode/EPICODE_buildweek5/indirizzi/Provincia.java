@@ -1,6 +1,7 @@
 package it.epicode.EPICODE_buildweek5.indirizzi;
 
 import com.opencsv.bean.CsvBindByName;
+import com.opencsv.bean.CsvBindByPosition;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -18,15 +19,15 @@ public class Provincia {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @CsvBindByName(column = "Sigla")
+    @CsvBindByPosition(position = 0)
     @Column
     private String sigla;
 
-    @CsvBindByName(column = "Provincia")
+    @CsvBindByPosition(position = 1)
     @Column
     private String provincia;
 
-    @CsvBindByName(column = "Regione")
+    @CsvBindByPosition(position = 2)
     @Column
     private String regione;
 
