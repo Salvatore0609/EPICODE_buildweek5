@@ -20,6 +20,9 @@ public class IndirizzoLegale {
     private String cap;
     private String localita;
 
+    //relazioni
     @ManyToOne
     private Comune comune;
+
+
 }

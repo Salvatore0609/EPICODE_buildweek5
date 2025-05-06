@@ -2,6 +2,7 @@ package it.epicode.EPICODE_buildweek5.utenti;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import it.epicode.EPICODE_buildweek5.auth.Role;
+import it.epicode.EPICODE_buildweek5.clienti.Cliente;
 import jakarta.persistence.*;
 import jakarta.persistence.GenerationType;
 import lombok.AllArgsConstructor;
@@ -37,13 +38,16 @@ public class Utente implements UserDetails {
     private String cognome;
     @Column
     private String avatar;
+
+    //tipo utente
     @ElementCollection(fetch = FetchType.EAGER)
     @Enumerated(EnumType.STRING)
     private Set<Role> roles;
 
-    //tipo utente
-    @Enumerated(EnumType.STRING)
-    private TipoUtente tipoUtente;
+    //relazioni
+    /*@OneToMany
+    private Set<Cliente> cliente;*/
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

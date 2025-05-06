@@ -21,21 +21,20 @@ public class Comune {
 
 
     @CsvBindByPosition(position = 0)
-    @Column(nullable = false)
+    @Column
     private String codiceProvincia;
 
 
     @CsvBindByPosition(position = 1)
-    @Column(nullable = false)
+    @Column
     private String progressivoComune;
 
 
     @CsvBindByPosition(position = 2)
-    @Column(nullable = false)
+    @Column
     private String denominazioneInItaliano;
 
     @CsvBindByPosition(position = 3)
-    @Transient // <-- non salvare nel DB
     private String nomeProvincia;
 
 

@@ -116,9 +116,11 @@ public class UtenteService {
         }
         utenteRepository.deleteById(id);
     }
+
     public boolean existsByUsername(String username) {
         return utenteRepository.existsByUsername(username);
     }
+
     public void uploadImage(Long id, MultipartFile file) {
         Utente utente= utenteRepository.findById(id).orElseThrow(() -> new NotFoundException("Utente non trovato"));
         utente.setAvatar(cloudinaryService.uploadImage(file));

@@ -1,5 +1,6 @@
 package it.epicode.EPICODE_buildweek5.fatture;
 
+import it.epicode.EPICODE_buildweek5.clienti.Cliente;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -25,5 +26,9 @@ public class Fattura {
     //stati fattura
     @ManyToOne
     private StatoFattura statoFattura;
+
+    //relazioni
+    @ManyToOne
+    private Cliente cliente;
 
 }
