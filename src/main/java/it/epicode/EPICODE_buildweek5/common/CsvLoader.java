@@ -68,8 +68,10 @@ public class CsvLoader {
                     .withSeparator(';')
                     .withIgnoreLeadingWhiteSpace(true)
                     .withIgnoreQuotations(true)
+                    .withSkipLines(1)
                     .build()
                     .parse();
+
         } catch (Exception e) {
             throw new RuntimeException("Errore caricamento province.csv", e);
         }
@@ -83,6 +85,7 @@ public class CsvLoader {
                     .withSeparator(';')
                     .withIgnoreLeadingWhiteSpace(true)
                     .withIgnoreQuotations(true)
+                    .withSkipLines(1)
                     .build()
                     .parse();
         } catch (Exception e) {

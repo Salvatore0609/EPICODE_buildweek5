@@ -19,7 +19,7 @@ public class Provincia {
     private Long id;
 
     @CsvBindByName(column = "Sigla")
-    @Column(nullable = false, unique = true)
+    @Column
     private String sigla;
 
     @CsvBindByName(column = "Provincia")

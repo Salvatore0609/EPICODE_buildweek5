@@ -19,12 +19,12 @@ public class Comune {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @CsvBindByName(column = "Codice Provincia (Storico)(1)")
+    @CsvBindByName(column = "Codice Provincia")
     @CsvBindByPosition(position = 0)
     @Column(nullable = false)
     private String codiceProvincia;
 
-    @CsvBindByName(column = "Progressivo del Comune (2)")
+    @CsvBindByName(column = "Progressivo del Comune")
     @CsvBindByPosition(position = 1)
     @Column(nullable = false)
     private String progressivoComune;
