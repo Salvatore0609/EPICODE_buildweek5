@@ -48,13 +48,14 @@ public class CsvLoader {
     public void init() {
         System.out.println(">>> CsvLoader.init() START");
         List<Provincia> province = parseProvince();
+        province.forEach(p -> System.out.println(">> Provincia caricata: " + p.getProvincia()));
         provinciaRepository.saveAll(province);
 
         List<Comune> comuni = parseComuni();
         // assegna a ciascun Comune la Provincia persistita
         comuni.forEach(c -> {
-            Provincia p = provinciaRepository.findBySigla(c.getCodiceProvincia())
-                    .orElseThrow(() -> new RuntimeException("Provincia non trovata: " + c.getCodiceProvincia()));
+            Provincia p = provinciaRepository.findByProvincia(c.getNomeProvincia().trim())
+                    .orElseThrow(() -> new RuntimeException("Provincia non trovata: " + c.getNomeProvincia()));
             c.setProvincia(p);
         });
         comuneRepository.saveAll(comuni);

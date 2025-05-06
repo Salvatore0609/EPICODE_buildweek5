@@ -34,6 +34,11 @@ public class Comune {
     @Column(nullable = false)
     private String denominazioneInItaliano;
 
+    @CsvBindByPosition(position = 3)
+    @Transient // <-- non salvare nel DB
+    private String nomeProvincia;
+
+
     //classe provincia
     @ManyToOne
     private Provincia provincia;
