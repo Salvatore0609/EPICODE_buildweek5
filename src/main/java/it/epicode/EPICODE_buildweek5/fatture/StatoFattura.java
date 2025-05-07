@@ -17,7 +17,7 @@ public class StatoFattura {
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
     @Column
-    private String nome;
+    private String nome; // GLI STATI FATTURA POSSONO ESSERE, ANNULLATO, PAGATO, NON PAGATO, DA PAGARE, DA ANNULLARE, PAGATO PARZIALMENTE, DA PAGARE PARZIALMENTE, ANNULLATO PARZIALMENTE, DA ANNULLARE PARZIALMENTE
 
  @OneToMany
  private List<Fattura> fattura;

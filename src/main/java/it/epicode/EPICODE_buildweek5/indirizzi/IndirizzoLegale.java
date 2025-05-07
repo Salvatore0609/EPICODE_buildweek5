@@ -21,7 +21,7 @@ public class IndirizzoLegale {
     private String localita;
 
     //relazioni
-    @ManyToOne
+    @ManyToOne()
     private Comune comune;
 
 
