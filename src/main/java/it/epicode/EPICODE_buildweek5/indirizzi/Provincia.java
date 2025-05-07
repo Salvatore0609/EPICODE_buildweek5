@@ -1,5 +1,6 @@
 package it.epicode.EPICODE_buildweek5.indirizzi;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
 import jakarta.persistence.*;
@@ -33,5 +34,6 @@ public class Provincia {
 
     //classe comuni
     @OneToMany
+    @JsonIgnore
     private List<Comune> comuni;
 }

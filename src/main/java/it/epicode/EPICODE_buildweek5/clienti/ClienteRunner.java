@@ -33,14 +33,16 @@ public class ClienteRunner implements CommandLineRunner {
         indirizzoLegale.setVia(faker.address().streetName());
         indirizzoLegale.setCivico(faker.address().streetAddressNumber());
         indirizzoLegale.setCap(faker.address().zipCode());
-        indirizzoLegale.setLocalita(comuneSelezionato.getCodiceProvincia() + " " + comuneSelezionato.getProgressivoComune() + " " + comuneSelezionato.getDenominazioneInItaliano() + " " + comuneSelezionato.getNomeProvincia());
+        indirizzoLegale.setLocalita( comuneSelezionato.getDenominazioneInItaliano() + ", " + comuneSelezionato.getNomeProvincia());
+        indirizzoLegale.setComune(comuneSelezionato);
         indirizzoLegale = IndirizzoLegaleRepository.save(indirizzoLegale);
 
         IndirizzoOperativa indirizzoOperativa = new IndirizzoOperativa();
         indirizzoOperativa.setVia(faker.address().streetName());
         indirizzoOperativa.setCivico(faker.address().streetAddressNumber());
         indirizzoOperativa.setCap(faker.address().zipCode());
-        indirizzoOperativa.setLocalita(comuneSelezionato.getCodiceProvincia() + " " + comuneSelezionato.getProgressivoComune() + " " + comuneSelezionato.getDenominazioneInItaliano() + " " + comuneSelezionato.getNomeProvincia());
+        indirizzoOperativa.setLocalita(  comuneSelezionato.getDenominazioneInItaliano() + ", " + comuneSelezionato.getNomeProvincia());
+        indirizzoOperativa.setComune(comuneSelezionato);
         indirizzoOperativa = IndirizzoOperativaRepository.save(indirizzoOperativa);
 
             TipoCliente tipo = TipoCliente.values()[faker.random().nextInt(TipoCliente.values().length)];
