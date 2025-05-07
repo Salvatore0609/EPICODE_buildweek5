@@ -19,10 +19,19 @@ import org.springframework.stereotype.Service;
 public class FatturaService {
 
     private final FatturaRepository fRepo;
+    private final ClienteRepository clienteRepo;
+    private final StatoFatturaRepository statoFatturaRepo;
 
     public CommonResponse createFattura(FatturaRequest request) throws MessagingException {
         Fattura fattura = new Fattura();
         BeanUtils.copyProperties(request, fattura);
+        Cliente cliente = clienteRepo.findById(request.getClienteId())
+                .orElseThrow(() -> new NotFoundException("Cliente non trovato"));
+        StatoFattura statoFattura = statoFatturaRepo.findById(request.getStatoFatturaId())
+                .orElseThrow(() -> new NotFoundException("Stato Fattura non trovato"));
+        fattura.setCliente(cliente);
+        fattura.setStatoFattura(statoFattura);
+
         fattura = fRepo.save(fattura);
         return new CommonResponse(fattura.getId());
     }

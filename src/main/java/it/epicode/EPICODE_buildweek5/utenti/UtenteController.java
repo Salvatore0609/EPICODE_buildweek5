@@ -23,10 +23,12 @@ public class UtenteController {
 
     @GetMapping("")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("isAuthenticated()")
     public List<Utente> getAllUtenti() {return utenteService.getAllUtenti();}
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("isAuthenticated()")
     public Utente findById(@PathVariable Long id) {
         return utenteService.getUtenteById(id);
     }
@@ -34,6 +36,7 @@ public class UtenteController {
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/current-user")
+
     public Utente getCurrentUser(@AuthenticationPrincipal Utente utente) {
         return utente;
     }
@@ -49,6 +52,7 @@ public class UtenteController {
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.CREATED)
+
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
         log.info("Login request:");
         String token = utenteService.authenticateUser(
@@ -62,6 +66,7 @@ public class UtenteController {
     @PreAuthorize("isAuthenticated()")
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+
     public Utente updateUtente(@PathVariable Long id, @RequestBody UtenteRequest request, @AuthenticationPrincipal Utente utente) {
         return utenteService.updateUtente(id, request, utente);
     }

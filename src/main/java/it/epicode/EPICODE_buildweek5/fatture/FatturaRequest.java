@@ -12,14 +12,14 @@ import java.time.LocalDate;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FatturaRequest {
-    @NotBlank(message = "Inserisci il nome del cliente")
-    private Cliente cliente;
+    @NotBlank(message = "Inserisci l id del cliente")
+    private Long clienteId;
     @NotBlank(message = "Inserisci il numero di fattura")
     private Integer numero;
     @NotBlank(message = "Inserisci l'importo")
     private Double importo;
     @NotBlank(message = "Inserisci lo stato della fattura")
-    private StatoFattura statoFattura;
+    private Long statoFatturaId;
     @NotBlank(message = "Inserisci la data della fattura")
     private LocalDate data;
     @NotBlank(message = "Inserisci l'anno della fattura")

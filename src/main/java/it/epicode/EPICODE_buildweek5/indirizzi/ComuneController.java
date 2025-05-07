@@ -5,6 +5,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,20 +18,25 @@ public class ComuneController {
     private ComuneService comuneService;
 
     @GetMapping("/all")
+    @PreAuthorize("isAuthenticated()")
     public Page<Comune> getAllComuni(@RequestParam(defaultValue = "0") int page,
                                      @RequestParam(defaultValue = "10") int size,
                                      @RequestParam(defaultValue = "id") String sortBy) {
         return comuneService.getAllComuni(page, size, sortBy);
     }
     @GetMapping("/get/{id}")
+    @PreAuthorize("isAuthenticated()")
     public Comune getComuneById(@PathVariable Long id) {return comuneService.getComuneById(id);}
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public CommonResponse createComune(@RequestBody ComuneRequest request) {return comuneService.createComune(request);}
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public Comune updateComune(@PathVariable Long id,@RequestBody ComuneRequest request) {return comuneService.updateComune(id, request);}
     @DeleteMapping("/delete/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @PreAuthorize("hasRole('ROLE_ADMIN')")
     public void deleteComune(@PathVariable Long id) {comuneService.deleteComune(id);}
 }

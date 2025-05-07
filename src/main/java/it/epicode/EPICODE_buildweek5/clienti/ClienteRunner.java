@@ -1,6 +1,10 @@
 package it.epicode.EPICODE_buildweek5.clienti;
 
 import com.github.javafaker.Faker;
+import it.epicode.EPICODE_buildweek5.fatture.Fattura;
+import it.epicode.EPICODE_buildweek5.fatture.FatturaRepository;
+import it.epicode.EPICODE_buildweek5.fatture.StatoFattura;
+import it.epicode.EPICODE_buildweek5.fatture.StatoFatturaRepository;
 import it.epicode.EPICODE_buildweek5.indirizzi.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
@@ -15,6 +19,8 @@ public class ClienteRunner implements CommandLineRunner {
     private final IndirizzoLegaleRepository IndirizzoLegaleRepository;
     private final IndirizzoOperativaRepository IndirizzoOperativaRepository;
     private final ComuneRepository comuneRepository;
+    private final FatturaRepository fatturaRepository;
+    private final StatoFatturaRepository statoFatturaRepository;
     private final Faker faker;
 
     @Override
@@ -57,12 +63,30 @@ public class ClienteRunner implements CommandLineRunner {
             cliente.setNomeContatto(faker.name().firstName());
             cliente.setCognomeContatto(faker.name().lastName());
             cliente.setTelefonoContatto(faker.phoneNumber().phoneNumber());
+            cliente.setLogoAziendale(faker.company().logo());
+            cliente.setFatturatoAnnuale(faker.number().randomDouble(2, 100000, 10000000));
+            cliente.setDataUltimoContatto(faker.date().birthday().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate());
+            cliente.setDataInserimento(faker.date().birthday().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate());
             cliente.setTipoCliente(tipo);
 
 
             cliente.setIndirizzoLegale(indirizzoLegale);
             cliente.setIndirizzoOperativa(indirizzoOperativa);
             clienteRepository.save(cliente);
+
+            StatoFattura statoFattura = new StatoFattura();
+            statoFattura.setNome(StatoFattura.statiFattura.get(faker.random().nextInt(StatoFattura.statiFattura.size())));
+            statoFatturaRepository.save(statoFattura);
+
+            Fattura fattura = new Fattura();
+            fattura.setData(faker.date().birthday().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate());
+            fattura.setNumero(faker.number().numberBetween(1, 1000));
+            fattura.setImporto(faker.number().randomDouble(2, 100, 1000));
+            fattura.setStatoFattura(statoFattura);
+            fattura.setCliente(cliente);
+            fatturaRepository.save(fattura);
+
+
         }
     }
 }
