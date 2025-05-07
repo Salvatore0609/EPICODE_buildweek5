@@ -1,5 +1,6 @@
 package it.epicode.EPICODE_buildweek5.indirizzi;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.opencsv.bean.CsvBindAndJoinByName;
 import com.opencsv.bean.CsvBindByName;
 import com.opencsv.bean.CsvBindByPosition;
@@ -42,9 +43,11 @@ public class Comune {
     @ManyToOne
     private Provincia provincia;
     //indirizzi legali
-    @OneToMany
+    @OneToMany(mappedBy = "comune")
+    @JsonIgnore
     private List<IndirizzoLegale> indirizzoLegale;
     //indirizzi operative
-    @OneToMany
+    @OneToMany(mappedBy = "comune")
+    @JsonIgnore
     private List<IndirizzoOperativa> indirizzoOperativa;
 }
