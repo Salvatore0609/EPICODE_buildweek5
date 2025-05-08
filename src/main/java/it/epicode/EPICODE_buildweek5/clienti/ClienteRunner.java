@@ -85,7 +85,7 @@ public class ClienteRunner implements CommandLineRunner {
                 Fattura fattura = new Fattura();
                 fattura.setData(faker.date().birthday().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate());
                 fattura.setNumero(faker.number().numberBetween(1, 1000));
-                fattura.setImporto(faker.number().randomDouble(2, 100, 1000));
+                fattura.setRangeDiImporti(faker.number().randomDouble(2, 100, 1000));
                 fattura.setStatoFattura(statoFattura);
                 fattura.setCliente(cliente);
                 fattura = fatturaRepository.save(fattura);

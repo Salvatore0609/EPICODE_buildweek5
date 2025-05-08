@@ -20,7 +20,7 @@ public class Fattura {
     @Column
     private LocalDate data;
     @Column
-    private Double importo;
+    private Double rangeDiImporti;
     @Column
     private Integer numero;
 

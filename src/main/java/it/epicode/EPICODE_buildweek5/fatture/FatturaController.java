@@ -8,10 +8,13 @@ import it.epicode.EPICODE_buildweek5.utenti.Utente;
 import jakarta.mail.MessagingException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/fatture")
@@ -31,12 +34,33 @@ public class FatturaController {
                                        @RequestParam(defaultValue = "10") int size,
                                        @RequestParam(defaultValue = "id") String sortBy,
                                        @RequestParam(defaultValue = "asc") String direction,
-                                       @RequestParam(required = false) Long clienteId) {
+                                       @RequestParam(required = false) Long clienteId,
+                                       @RequestParam(required = false) Long statoFatturaId,
+                                       @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data,
+                                       @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate anno,
+                                       @RequestParam(required = false) Integer rangeDiImporti) {
 
-        return (clienteId != null)
-                ? fatturaService.findFattureByClienteId(clienteId, page, size, sortBy, direction)
-                : fatturaService.findAll(page, size, sortBy, direction);
+        if (clienteId != null) {
+            return fatturaService.findFattureByClienteId(clienteId, page, size, sortBy, direction);
+        }
+
+        if (statoFatturaId != null) {
+            return fatturaService.findFattureByStatoFatturaId(statoFatturaId, page, size, sortBy, direction);
+        }
+
+        if (data != null) {
+            return fatturaService.findFattureByData(data, page, size, sortBy, direction);
+        }
+
+
+
+        if (rangeDiImporti != null) {
+            return fatturaService.findFattureByRangeDiImporti(rangeDiImporti, page, size, sortBy, direction);
+        }
+
+        return fatturaService.findAll(page, size, sortBy, direction);
     }
+
 
     @PreAuthorize("isAuthenticated()")
     @GetMapping("/current-fattura")

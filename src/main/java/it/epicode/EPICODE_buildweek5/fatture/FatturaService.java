@@ -14,6 +14,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
+
 @Service
 @RequiredArgsConstructor
 public class FatturaService {
@@ -63,6 +65,31 @@ public class FatturaService {
         Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
         return fRepo.findByClienteId(clienteId, pageable);
+    }
+
+
+    public Page<Fattura> findFattureByStatoFatturaId(Long statoFatturaId, int page, int size, String sortBy, String direction) {
+        Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return fRepo.findByStatoFatturaId(statoFatturaId, pageable);
+    }
+
+    public Page<Fattura> findFattureByData(LocalDate data, int page, int size, String sortBy, String direction) {
+        Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return fRepo.findByData(data, pageable);
+    }
+
+    public Page<Fattura> findFattureByAnno(LocalDate anno, int page, int size, String sortBy, String direction) {
+        Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return fRepo.findByData(anno, pageable);
+    }
+
+    public Page<Fattura> findFattureByRangeDiImporti(Integer rangeDiImporti, int page, int size, String sortBy, String direction) {
+        Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return fRepo.findByRangeDiImporti(rangeDiImporti, pageable);
     }
 
 
