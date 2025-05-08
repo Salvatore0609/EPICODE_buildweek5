@@ -19,9 +19,9 @@ public class ClienteRequest {
     @NotBlank(message = "Inserisci il fatturato annuale")
     private Double fatturatoAnnuale;
     @NotBlank(message = "Inserisci la data di inserimento")
-    private LocalDate dataInserimento;
+    private String dataInserimento;
     @NotBlank(message = "Inserisci la data dell'ultimo contatto")
-    private LocalDate dataUltimoContatto;
+    private String dataUltimoContatto;
     @NotBlank(message = "Inserisci l'indirizzo legate")
     private IndirizzoLegale indirizzoLegale;
 }

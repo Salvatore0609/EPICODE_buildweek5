@@ -65,8 +65,8 @@ public class ClienteRunner implements CommandLineRunner {
             cliente.setTelefonoContatto(faker.phoneNumber().phoneNumber());
             cliente.setLogoAziendale(faker.company().logo());
             cliente.setFatturatoAnnuale(faker.number().randomDouble(2, 100000, 10000000));
-            cliente.setDataUltimoContatto(faker.date().birthday().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate());
             cliente.setDataInserimento(faker.date().birthday().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate());
+            cliente.setDataUltimoContatto(faker.date().birthday().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate());
             cliente.setTipoCliente(tipo);
 
 

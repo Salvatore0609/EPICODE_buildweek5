@@ -7,15 +7,19 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
 
 @RestController
 @RequestMapping("/clienti")
 @RequiredArgsConstructor
 public class ClienteController {
     private final ClienteService clienteService;
+    private final ClienteRepository clienteRepository;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
@@ -31,15 +35,29 @@ public class ClienteController {
     }
 
     @GetMapping("/all")
-    @PreAuthorize("isAuthenticated()")
+
     public Page<Cliente> getAllClienti(@RequestParam(defaultValue = "0") int page,
                                        @RequestParam(defaultValue = "10") int size,
                                        @RequestParam(defaultValue = "nomeContatto") String sortBy,
-                                       @RequestParam(defaultValue = "asc") String direction) {
+                                       @RequestParam(defaultValue = "asc") String direction,
+                                       @RequestParam(required = false) Double fatturatoMin,
+                                       @RequestParam(required = false) Double fatturatoMax,
+                                       @RequestParam(required = false) String nomeContatto)
+                                        {
 
         Sort.Direction sortDirection = direction.equalsIgnoreCase("desc") ? Sort.Direction.DESC : Sort.Direction.ASC;
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sortBy));
-        return clienteService.findAll(pageable);
+        if (nomeContatto != null && !nomeContatto.isEmpty()) {
+            return clienteService.searchByNomeContatto(nomeContatto, pageable);
+        } else if (fatturatoMin != null && fatturatoMax != null) {
+            return clienteService.findByFatturatoAnnualeBetween(fatturatoMin, fatturatoMax, pageable);
+        } else if (fatturatoMin != null) {
+            return clienteService.findByFatturatoAnnualeGreaterThanEqual(fatturatoMin, pageable);
+        } else if (fatturatoMax != null) {
+            return clienteService.findByFatturatoAnnualeLessThanEqual(fatturatoMax, pageable);
+        } else {
+            return clienteService.findAll(pageable);
+        }
     }
 
     @PutMapping("/{id}")

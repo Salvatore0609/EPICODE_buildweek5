@@ -57,4 +57,18 @@ public class ClienteService {
 
         return cRepo.findAll(pageable);
     }
+
+    public Page<Cliente> findByFatturatoAnnualeBetween(double fatturatoMin, double fatturatoMax, Pageable pageable) {
+        return cRepo.findByFatturatoAnnualeBetween(fatturatoMin, fatturatoMax, pageable);
+    }
+    public Page<Cliente> findByFatturatoAnnualeGreaterThanEqual(double fatturatoMin, Pageable pageable) {
+        return cRepo.findByFatturatoAnnualeGreaterThanEqual(fatturatoMin, pageable);
+    }
+    public Page<Cliente> findByFatturatoAnnualeLessThanEqual(double fatturatoMax, Pageable pageable) {
+        return cRepo.findByFatturatoAnnualeLessThanEqual(fatturatoMax, pageable);
+    }
+
+    public Page<Cliente> searchByNomeContatto(String nomeContatto, Pageable pageable) {
+        return cRepo.searchByNomeContatto(nomeContatto, pageable);
+    }
 }
