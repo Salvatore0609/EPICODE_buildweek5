@@ -1,5 +1,6 @@
 package it.epicode.EPICODE_buildweek5.fatture;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import it.epicode.EPICODE_buildweek5.clienti.Cliente;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,6 +30,8 @@ public class Fattura {
 
     //relazioni
     @ManyToOne
+    @JoinColumn(name = "cliente_id")
+    @JsonBackReference
     private Cliente cliente;
 
 }

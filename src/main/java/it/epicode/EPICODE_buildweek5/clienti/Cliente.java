@@ -1,5 +1,6 @@
 package it.epicode.EPICODE_buildweek5.clienti;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import it.epicode.EPICODE_buildweek5.fatture.Fattura;
 import it.epicode.EPICODE_buildweek5.indirizzi.IndirizzoLegale;
 import it.epicode.EPICODE_buildweek5.indirizzi.IndirizzoOperativa;
@@ -63,7 +64,8 @@ public class Cliente {
     @OneToOne
     private IndirizzoOperativa indirizzoOperativa;
 
-    @OneToMany
+    @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @JsonManagedReference
     private List<Fattura> fattura;
 
 }

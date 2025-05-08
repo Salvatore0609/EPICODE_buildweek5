@@ -26,11 +26,16 @@ public class FatturaController {
     }
 
     @GetMapping("/all")
-    @PreAuthorize("isAuthenticated()")
+
     public Page<Fattura> getAllFatture(@RequestParam(defaultValue = "0") int page,
                                        @RequestParam(defaultValue = "10") int size,
-                                       @RequestParam(defaultValue = "id") String sortBy) {
-        return fatturaService.findAll(page, size, sortBy);
+                                       @RequestParam(defaultValue = "id") String sortBy,
+                                       @RequestParam(defaultValue = "asc") String direction,
+                                       @RequestParam(required = false) Long clienteId) {
+
+        return (clienteId != null)
+                ? fatturaService.findFattureByClienteId(clienteId, page, size, sortBy, direction)
+                : fatturaService.findAll(page, size, sortBy, direction);
     }
 
     @PreAuthorize("isAuthenticated()")

@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Component
@@ -74,17 +75,26 @@ public class ClienteRunner implements CommandLineRunner {
             cliente.setIndirizzoOperativa(indirizzoOperativa);
             clienteRepository.save(cliente);
 
-            StatoFattura statoFattura = new StatoFattura();
-            statoFattura.setNome(StatoFattura.statiFattura.get(faker.random().nextInt(StatoFattura.statiFattura.size())));
-            statoFatturaRepository.save(statoFattura);
+            List<Fattura> fattureCliente = new ArrayList<>();
 
-            Fattura fattura = new Fattura();
-            fattura.setData(faker.date().birthday().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate());
-            fattura.setNumero(faker.number().numberBetween(1, 1000));
-            fattura.setImporto(faker.number().randomDouble(2, 100, 1000));
-            fattura.setStatoFattura(statoFattura);
-            fattura.setCliente(cliente);
-            fatturaRepository.save(fattura);
+            for (int j = 0; j < 3; j++) {
+                StatoFattura statoFattura = new StatoFattura();
+                statoFattura.setNome(StatoFattura.statiFattura.get(faker.random().nextInt(StatoFattura.statiFattura.size())));
+                statoFattura = statoFatturaRepository.save(statoFattura);
+
+                Fattura fattura = new Fattura();
+                fattura.setData(faker.date().birthday().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate());
+                fattura.setNumero(faker.number().numberBetween(1, 1000));
+                fattura.setImporto(faker.number().randomDouble(2, 100, 1000));
+                fattura.setStatoFattura(statoFattura);
+                fattura.setCliente(cliente);
+                fattura = fatturaRepository.save(fattura);
+
+                fattureCliente.add(fattura);
+            }
+
+            cliente.setFattura(fattureCliente);
+            clienteRepository.save(cliente);
 
 
         }

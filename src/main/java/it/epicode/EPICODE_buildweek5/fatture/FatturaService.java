@@ -54,8 +54,16 @@ public class FatturaService {
         return fRepo.save(fattura);
     }
 
-    public Page<Fattura> findAll(int page, int size, String sort) {
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sort));
+    public Page<Fattura> findAll(int page, int size, String sortBy, String direction) {
+        Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        Pageable pageable = PageRequest.of(page, size, sort);
         return fRepo.findAll(pageable);
     }
+    public Page<Fattura> findFattureByClienteId(Long clienteId, int page, int size, String sortBy, String direction) {
+        Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return fRepo.findByClienteId(clienteId, pageable);
+    }
+
+
 }
