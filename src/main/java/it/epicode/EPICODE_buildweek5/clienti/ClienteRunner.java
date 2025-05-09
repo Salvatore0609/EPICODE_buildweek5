@@ -1,17 +1,22 @@
 package it.epicode.EPICODE_buildweek5.clienti;
 
 import com.github.javafaker.Faker;
+import it.epicode.EPICODE_buildweek5.auth.Role;
 import it.epicode.EPICODE_buildweek5.fatture.Fattura;
 import it.epicode.EPICODE_buildweek5.fatture.FatturaRepository;
 import it.epicode.EPICODE_buildweek5.fatture.StatoFattura;
 import it.epicode.EPICODE_buildweek5.fatture.StatoFatturaRepository;
 import it.epicode.EPICODE_buildweek5.indirizzi.*;
+import it.epicode.EPICODE_buildweek5.utenti.Utente;
+import it.epicode.EPICODE_buildweek5.utenti.UtenteRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 @Component
 @RequiredArgsConstructor
@@ -23,6 +28,8 @@ public class ClienteRunner implements CommandLineRunner {
     private final FatturaRepository fatturaRepository;
     private final StatoFatturaRepository statoFatturaRepository;
     private final Faker faker;
+    private final UtenteRepository utenteRepository;
+    private final PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
@@ -84,6 +91,7 @@ public class ClienteRunner implements CommandLineRunner {
 
                 Fattura fattura = new Fattura();
                 fattura.setData(faker.date().birthday().toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalDate());
+                fattura.setAnno(fattura.getData().getYear());
                 fattura.setNumero(faker.number().numberBetween(1, 1000));
                 fattura.setRangeDiImporti(faker.number().randomDouble(2, 100, 1000));
                 fattura.setStatoFattura(statoFattura);
@@ -98,5 +106,10 @@ public class ClienteRunner implements CommandLineRunner {
 
 
         }
+        Utente admin = new Utente();
+        admin.setUsername("admin");
+        admin.setPassword(passwordEncoder.encode("adminpwd"));
+        admin.setRoles(Set.of(Role.ROLE_ADMIN));
+        utenteRepository.save(admin);
     }
 }

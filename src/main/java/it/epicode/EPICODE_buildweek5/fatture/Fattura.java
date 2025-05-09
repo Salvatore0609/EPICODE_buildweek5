@@ -20,6 +20,8 @@ public class Fattura {
     @Column
     private LocalDate data;
     @Column
+    private Integer anno;
+    @Column
     private Double rangeDiImporti;
     @Column
     private Integer numero;

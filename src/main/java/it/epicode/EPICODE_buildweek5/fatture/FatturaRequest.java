@@ -23,7 +23,7 @@ public class FatturaRequest {
     @NotBlank(message = "Inserisci la data della fattura")
     private LocalDate data;
     @NotBlank(message = "Inserisci l'anno della fattura")
-    private LocalDate anno;
+    private Integer anno;
     @NotBlank(message = "Inserisci il range di importi")
     private Double rangeDiImporti;
 }

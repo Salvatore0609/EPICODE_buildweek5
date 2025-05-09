@@ -37,7 +37,7 @@ public class FatturaController {
                                        @RequestParam(required = false) Long clienteId,
                                        @RequestParam(required = false) Long statoFatturaId,
                                        @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate data,
-                                       @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate anno,
+                                       @RequestParam(required = false) Integer anno,
                                        @RequestParam(required = false) Integer rangeDiImporti) {
 
         if (clienteId != null) {
@@ -50,6 +50,9 @@ public class FatturaController {
 
         if (data != null) {
             return fatturaService.findFattureByData(data, page, size, sortBy, direction);
+        }
+        if (anno != null) {
+            return fatturaService.findFattureByAnno(anno, page, size, sortBy, direction);
         }
 
 

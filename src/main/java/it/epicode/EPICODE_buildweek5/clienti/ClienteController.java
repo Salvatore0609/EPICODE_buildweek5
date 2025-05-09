@@ -42,6 +42,8 @@ public class ClienteController {
                                        @RequestParam(defaultValue = "asc") String direction,
                                        @RequestParam(required = false) Double fatturatoMin,
                                        @RequestParam(required = false) Double fatturatoMax,
+                                       @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataInserimento,
+                                       @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate dataUltimoContatto,
                                        @RequestParam(required = false) String nomeContatto)
                                         {
 
@@ -55,7 +57,13 @@ public class ClienteController {
             return clienteService.findByFatturatoAnnualeGreaterThanEqual(fatturatoMin, pageable);
         } else if (fatturatoMax != null) {
             return clienteService.findByFatturatoAnnualeLessThanEqual(fatturatoMax, pageable);
-        } else {
+        } else if (dataInserimento != null) {
+                                            return clienteService.findClientiByDataInserimento(dataInserimento, page, size, sortBy, direction);
+                                        }
+        else if (dataUltimoContatto != null) {
+            return clienteService.findClientiByDataUltimoContatto(dataInserimento, page, size, sortBy, direction);
+        }
+        else {
             return clienteService.findAll(pageable);
         }
     }

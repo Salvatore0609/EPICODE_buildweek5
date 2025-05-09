@@ -13,5 +13,7 @@ public interface FatturaRepository extends JpaRepository<Fattura, Long> {
 
     Page<Fattura> findByData(LocalDate data, Pageable pageable);
 
+    Page<Fattura> findByAnno(Integer anno, Pageable pageable);
+
     Page<Fattura> findByRangeDiImporti(Integer rangeDiImporti, Pageable pageable);
 }

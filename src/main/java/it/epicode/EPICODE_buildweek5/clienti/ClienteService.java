@@ -2,6 +2,12 @@ package it.epicode.EPICODE_buildweek5.clienti;
 
 import it.epicode.EPICODE_buildweek5.common.CommonResponse;
 import it.epicode.EPICODE_buildweek5.exceptions.NotFoundException;
+import it.epicode.EPICODE_buildweek5.fatture.Fattura;
+import it.epicode.EPICODE_buildweek5.fatture.FatturaRepository;
+import it.epicode.EPICODE_buildweek5.indirizzi.IndirizzoLegale;
+import it.epicode.EPICODE_buildweek5.indirizzi.IndirizzoLegaleRepository;
+import it.epicode.EPICODE_buildweek5.indirizzi.IndirizzoOperativa;
+import it.epicode.EPICODE_buildweek5.indirizzi.IndirizzoOperativaRepository;
 import jakarta.mail.MessagingException;
 
 import org.springframework.beans.BeanUtils;
@@ -13,24 +19,27 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.annotation.Validated;
 
+import java.time.LocalDate;
+
 @Service
 @Validated
 public class ClienteService {
     @Autowired
     private ClienteRepository cRepo;
+    @Autowired
+    private IndirizzoLegaleRepository iRepo;
+    @Autowired
+    private IndirizzoOperativaRepository iRepo2;
 
     public CommonResponse createCliente(ClienteRequest request) throws MessagingException {
         Cliente cliente = new Cliente();
         BeanUtils.copyProperties(request, cliente);
-        /*if (cRepo.existsByNomeECognome(cliente.getNomeContatto(), cliente.getCognomeContatto())) {
-            throw new IllegalArgumentException("Cliente esistente");
-        }
-        if (cRepo.existsByPec(cliente.getPec())) {
-            throw new IllegalArgumentException("Cliente esistente");
-        }
-        if (cRepo.existsByPartitaIva(cliente.getPartitaIva())) {
-            throw new IllegalArgumentException("Cliente esistente");
-        }*/
+        IndirizzoLegale indirizzoLegale = iRepo.findById(request.getIndirizzoLegaleId()).orElseThrow(() -> new NotFoundException("Indirizzo legale non trovato"));
+        IndirizzoOperativa indirizzoOperativa = iRepo2.findById(request.getIndirizzoOperativaId()).orElseThrow(() -> new NotFoundException("Indirizzo operativo non trovato"));
+        cliente.setIndirizzoOperativa(indirizzoOperativa);
+        cliente.setIndirizzoLegale(indirizzoLegale);
+
+
         cliente = cRepo.save(cliente);
         return new CommonResponse(cliente.getId());
     }
@@ -70,5 +79,17 @@ public class ClienteService {
 
     public Page<Cliente> searchByNomeContatto(String nomeContatto, Pageable pageable) {
         return cRepo.searchByNomeContatto(nomeContatto, pageable);
+    }
+
+    public Page<Cliente> findClientiByDataInserimento(LocalDate data, int page, int size, String sortBy, String direction) {
+        Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return cRepo.findByDataInserimento(data, pageable);
+    }
+
+    public Page<Cliente> findClientiByDataUltimoContatto(LocalDate data, int page, int size, String sortBy, String direction) {
+        Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
+        Pageable pageable = PageRequest.of(page, size, sort);
+        return cRepo.findByDataUltimoContatto(data, pageable);
     }
 }

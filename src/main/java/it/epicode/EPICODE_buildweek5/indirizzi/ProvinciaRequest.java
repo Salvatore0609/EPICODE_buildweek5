@@ -19,5 +19,5 @@ public class ProvinciaRequest {
     @NotBlank(message = "La regione non può essere vuota")
     private String regione;
     @NotNull(message = "L'id del comune non può essere vuoto")
-    private Long comuneId;
+    private List<Long> comuniId;
 }

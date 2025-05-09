@@ -1,5 +1,6 @@
 package it.epicode.EPICODE_buildweek5.indirizzi;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.opencsv.bean.CsvBindAndJoinByName;
 import com.opencsv.bean.CsvBindByName;
@@ -41,6 +42,8 @@ public class Comune {
 
     //classe provincia
     @ManyToOne
+    @JoinColumn(name = "provincia_id")
+    @JsonBackReference
     private Provincia provincia;
     //indirizzi legali
     @OneToMany(mappedBy = "comune")

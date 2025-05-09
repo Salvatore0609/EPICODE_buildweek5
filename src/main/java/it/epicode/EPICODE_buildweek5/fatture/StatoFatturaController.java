@@ -19,6 +19,7 @@ public class StatoFatturaController {
 
     @GetMapping("")
     @ResponseStatus(HttpStatus.OK)
+    @PreAuthorize("isAuthenticated()")
 
     public Page<StatoFattura> findAll(@RequestParam(defaultValue = "0") int page,
                                     @RequestParam(defaultValue = "10") int size,

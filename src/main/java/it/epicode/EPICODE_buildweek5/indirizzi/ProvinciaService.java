@@ -34,7 +34,7 @@ public class ProvinciaService {
         Provincia provincia = new Provincia();
         BeanUtils.copyProperties(request, provincia);
 
-        Comune comune = comuneRepository.findById(request.getComuneId())
+        Comune comune = comuneRepository.findById(request.getComuniId().get(0))
                 .orElseThrow(() -> new EntityNotFoundException("Comune non trovato"));
         comune.setProvincia(provincia);
         provincia.setComuni(new ArrayList<>(List.of(comune)));

@@ -80,10 +80,10 @@ public class FatturaService {
         return fRepo.findByData(data, pageable);
     }
 
-    public Page<Fattura> findFattureByAnno(LocalDate anno, int page, int size, String sortBy, String direction) {
+    public Page<Fattura> findFattureByAnno(Integer anno, int page, int size, String sortBy, String direction) {
         Sort sort = direction.equalsIgnoreCase("desc") ? Sort.by(sortBy).descending() : Sort.by(sortBy).ascending();
         Pageable pageable = PageRequest.of(page, size, sort);
-        return fRepo.findByData(anno, pageable);
+        return fRepo.findByAnno(anno, pageable);
     }
 
     public Page<Fattura> findFattureByRangeDiImporti(Integer rangeDiImporti, int page, int size, String sortBy, String direction) {
