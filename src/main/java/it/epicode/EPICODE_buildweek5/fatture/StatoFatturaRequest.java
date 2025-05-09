@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class StatoFatturaRequest {
     private String nome;
-    private Long fatturaId;
+
 }

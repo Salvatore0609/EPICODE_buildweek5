@@ -24,10 +24,7 @@ public class StatoFatturaService {
     public CommonResponse createStatoFattura(StatoFatturaRequest request) {
         StatoFattura statoFattura = new StatoFattura();
         statoFattura.setNome(request.getNome());
-        Fattura fattura = fatturaRepository.findById(request.getFatturaId())
-                .orElseThrow(() -> new EntityNotFoundException("Fattura non trovata"));
-        fattura.setStatoFattura(statoFattura);
-        fatturaRepository.save(fattura);
+
 
         statoFatturaRepository.save(statoFattura);
         return new CommonResponse(statoFattura.getId());
